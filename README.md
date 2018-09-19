@@ -1,3 +1,8 @@
+# Go compiler for james
+A modified go compiler 1.11 that includes a `-ignoreunused` flag on the build command. It allows you to ignore errors thrown by the compiler when you have an unused variable/imported package.
+
+Follow the instruction below to build and install.
+
 # The Go Programming Language
 
 Go is an open source programming language that makes it easy to build simple,
