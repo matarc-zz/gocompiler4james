@@ -234,6 +234,7 @@ func AddBuildFlags(cmd *base.Command) {
 
 	// Undocumented, unstable debugging flags.
 	cmd.Flag.StringVar(&cfg.DebugActiongraph, "debug-actiongraph", "", "")
+	cmd.Flag.BoolVar(&cfg.BuildIgnoreUnused, "ignoreunused", false, "")
 }
 
 // fileExtSplit expects a filename and returns the name

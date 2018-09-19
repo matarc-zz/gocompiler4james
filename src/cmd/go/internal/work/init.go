@@ -35,6 +35,9 @@ func BuildInit() {
 }
 
 func instrumentInit() {
+	if cfg.BuildIgnoreUnused {
+		forcedGcflags = append(forcedGcflags, "-ignoreunused")
+	}
 	if !cfg.BuildRace && !cfg.BuildMSan {
 		return
 	}

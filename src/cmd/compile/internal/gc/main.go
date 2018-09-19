@@ -29,6 +29,8 @@ import (
 	"strings"
 )
 
+var flag_ignoreUnused bool
+
 var imported_unsafe bool
 
 var (
@@ -182,6 +184,7 @@ func Main(archInit func(*Arch)) {
 	Nacl = objabi.GOOS == "nacl"
 	Wasm := objabi.GOARCH == "wasm"
 
+	flag.BoolVar(&flag_ignoreUnused, "ignoreunused", false, "Ignore unused variable and import statements")
 	flag.BoolVar(&compiling_runtime, "+", false, "compiling runtime")
 	flag.BoolVar(&compiling_std, "std", false, "compiling standard library")
 	objabi.Flagcount("%", "debug non-static initializers", &Debug['%'])
@@ -1162,9 +1165,13 @@ func pkgnotused(lineno src.XPos, path string, name string) {
 		elem = elem[i+1:]
 	}
 	if name == "" || elem == name {
-		yyerrorl(lineno, "imported and not used: %q", path)
+		if !flag_ignoreUnused {
+			yyerrorl(lineno, "imported and not used: %q", path)
+		}
 	} else {
-		yyerrorl(lineno, "imported and not used: %q as %s", path, name)
+		if !flag_ignoreUnused {
+			yyerrorl(lineno, "imported and not used: %q as %s", path, name)
+		}
 	}
 }
 
